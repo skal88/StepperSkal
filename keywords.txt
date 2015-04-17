@@ -1,0 +1,9 @@
+StepperSkal KEYWORD1
+
+enable  KEYWORD2
+disable KEYWORD2
+direction KEYWORD2
+stepsDelay  KEYWORD2
+steps KEYWORD2
+lapsstepsLap  KEYWORD2
+reset KEYWORD2
