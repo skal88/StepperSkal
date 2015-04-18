@@ -17,8 +17,10 @@ class StepperSkal
     void disable();
     void microstep(String divider);
     void direction(String direction);
+    String getDirection();
     void stepsDelay(long stepsDelay);
     void steps(int steps);
+    void move(int steps);
     void laps(int laps);
     void stepsLap(int stepsLap);
     void reset();
@@ -35,6 +37,7 @@ class StepperSkal
     int _motorStepsOffset; // Pasos de diferencia con la posición inicial
     long _motorStepsDelay; // Tiempo entre paso y paso (ms)
     int _motorStepsLap;
+    int _motorSteps; // Guardamos aqui los pasos que tenemos que hacer (Una vez hechos lo ponemos a 0)
 };
 
 #endif

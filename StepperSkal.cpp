@@ -27,6 +27,8 @@ StepperSkal::StepperSkal(int pinEnable, int pinDirection, int pinSteps, int pinM
   _motorDirection = HIGH;
   _motorStepsOffset = 0;
   _motorStepsDelay = 10;
+  _motorSteps = 0;
+  digitalWrite(_pinDirection, _motorDirection);
 }
 
 void StepperSkal::enable()
@@ -87,23 +89,34 @@ void StepperSkal::direction(String direction)
    digitalWrite( _pinDirection, _motorDirection);
 }
 
+String StepperSkal::getDirection(){
+  if(_motorDirection == HIGH){ return "FORWARD"; }
+  else if(_motorDirection == LOW){ return "BACKWARD"; }
+}
+
 void StepperSkal::stepsDelay(long stepsDelay ){
   _motorStepsDelay = stepsDelay;
 }
 
-void StepperSkal::steps(int steps){
+void StepperSkal::move(int steps){
+  _motorSteps = steps;
   if(_motorDirection == HIGH){
     _motorStepsOffset += steps;
   } else if(_motorDirection == LOW){
     _motorStepsOffset -= steps;
   }
   // 
-  for( int i=0; i<(steps*_motorDivider); i++){
+  if(_motorSteps>0){
     digitalWrite( _pinSteps, HIGH );
     delay( _motorStepsDelay );
     digitalWrite( _pinSteps, LOW );
     delay( _motorStepsDelay );
-  } 
+    _motorSteps--;
+  }
+}
+
+void StepperSkal::steps(int steps){
+  StepperSkal::move(steps);
 }
 
 void StepperSkal::laps(int laps){
@@ -144,4 +157,5 @@ void StepperSkal::reset(){
     digitalWrite( _pinSteps, LOW );
     delay( _motorStepsDelay );
   }
+  _motorStepsOffset = 0;
 }
